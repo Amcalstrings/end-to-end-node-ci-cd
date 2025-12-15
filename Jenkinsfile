@@ -18,22 +18,23 @@ pipeline {
             }
         }
 
-        stage ('Run Sonar Cloud Analysis'){
-            steps {
-                withSonarQubeEnv('SonarCloud'){
-                withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
-                    sh '''
-                        npx @sonarsource/sonar-scanner \
-                        -Dsonar.projectKey=amcal-org_node_project \
-                        -Dsonar.organization=amcal-org \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=https://sonarcloud.io \
-                        -Dsonar.login=$SONAR_TOKEN
-                    '''
-                    }
-                }
-            }
+        stage('SonarCloud Scan') {
+    steps {
+        withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+            sh '''
+            docker run --rm \
+              -e SONAR_TOKEN=$SONAR_TOKEN \
+              -v $(pwd):/usr/src \
+              sonarsource/sonar-scanner-cli \
+              -Dsonar.projectKey=amcal-org_node_project \
+              -Dsonar.organization=amcal-org \
+              -Dsonar.sources=. \
+              -Dsonar.host.url=https://sonarcloud.io
+            '''
         }
+    }
+}
+
     }
 
     post {
