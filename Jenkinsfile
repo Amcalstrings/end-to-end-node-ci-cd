@@ -9,7 +9,6 @@ pipeline {
     tools {
         nodejs 'node18'
         jdk 'jdk17'
-        sonarRunner 'sonar-scanner'
     }
 
     stages{
