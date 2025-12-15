@@ -23,7 +23,7 @@ pipeline {
                 withSonarQubeEnv('SonarCloud'){
                 withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
                     sh '''
-                        npx sonar-scanner \
+                        npx @sonarsource/sonar-scanner \
                         -Dsonar.projectKey=amcal-org_node_project \
                         -Dsonar.organization=amcal-org \
                         -Dsonar.sources=. \
