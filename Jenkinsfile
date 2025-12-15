@@ -19,7 +19,7 @@ pipeline {
             }
         }
 
-        stage ('RunSonarCloudAnalysis'){
+        stage ('Run Sonar Cloud Analysis'){
             steps {
                 withSonarQubeEnv('SonarCloud'){
                 withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
