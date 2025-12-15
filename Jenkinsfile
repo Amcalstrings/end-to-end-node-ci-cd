@@ -21,6 +21,7 @@ pipeline {
 
         stage ('RunSonarCloudAnalysis'){
             steps {
+                withSonarQubeEnv('SonarCloud'){
                 withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
                     sh '''
                         sonar-scanner \
@@ -30,6 +31,7 @@ pipeline {
                         -Dsonar.host.url=https://sonarcloud.io \
                         -Dsonar.login=$SONAR_TOKEN
                     '''
+                    }
                 }
             }
         }
