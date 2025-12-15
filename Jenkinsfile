@@ -9,7 +9,7 @@ pipeline {
     tools {
         nodejs 'node18'
         jdk 'jdk17'
-        
+        sonarScanner 'sonar-scanner'
     }
 
     stages{
